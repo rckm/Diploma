@@ -25,12 +25,13 @@
               <ul>
                 <li>
                   <router-link class="menu__reg--items" to="/signIn">
+                    <menu-icon />
                     Войти
                   </router-link>
                 </li>
                 <li>
                   <router-link class="menu__reg--items" to="/signUp">
-                    Зарегистрироваться
+                    <span>Зарегистрироваться</span>
                   </router-link>
                 </li>
               </ul>
@@ -53,50 +54,12 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+@import '../../assets/sass/mainHeader.sass'
 ul
   margin: 0
   li
     list-style-type: none
-
-.main
-  header
-    padding-top: 20px
-    .logo
-      font-size: 28px
-      font-family: 'Roboto', sans-serif
-      color: #424242
-      text-transform: uppercase
-      span
-        color: #ff5722
-      &:hover
-        text-decoration: none
-    .menu
-      display: flex
-      justify-content: flex-start
-      ul
-        display: flex
-      &__items
-        margin: 0 40px
-        font-size: 16px
-        font-family: 'Roboto', sans-serif
-        text-transform: uppercase
-        color: #424242
-        transition: all .3s
-        &:hover
-          text-decoration: none
-          color: #bdbdbd
-      &__reg
-        ul
-          display: flex
-          justify-content: center
-        &--items
-          margin: 0 20px
-          font-size: 16px
-          font-family: 'Roboto', sans-serif
-          text-transform: uppercase
-          color: #424242
-          transition: all .3s
-          &:hover
-            text-decoration: none
-            color: #BDBDBD
+// i
+//   margin-bottom: 4px
+//   padding-right: 10px
 </style>

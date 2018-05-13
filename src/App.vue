@@ -37,8 +37,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import url('https://fonts.googleapis.com/css?family=Open+Sans')
-@import url('https://fonts.googleapis.com/css?family=Roboto')
+@import './assets/sass/_fonts.sass'
 body
   background-color: #ffffff
 

@@ -1,40 +1,24 @@
 <template>
   <div class="test" data-app>
-    <v-app id="inspire">
-      <v-container>
-        <v-layout row>
-          <v-flex xs6>
-            <h3>Выберите предмет</h3>
-          </v-flex>
-          <v-flex xs6>
+    <b-container>
+      <b-row align-v="center" class="justify-content-center">
+        <b-col cols="6">
+          <b-card
+            align="center"
+            header="Выберите предмет"
+            header-bg-variant="warning">
             <v-select
               :items="getName"
               v-model="selectedTest"
-              label="Выберите..."
               single-line
-              append-icon="▾"
               item-text="name"
               :loading="isLoading"
-            ></v-select>
-          </v-flex>
-        </v-layout>
-          <div class="beginBtn" v-if="selectedTest">
-            <v-layout row align-center>
-              <v-flex xs12 class="text-xs-center">
-                <v-btn
-                to="/test/beginTest"
-                @click="sendId"
-                round
-                depressed
-                large
-                color="primary">
-                  Начать тест {{ selectedTest.name }}
-                </v-btn>
-              </v-flex>
-            </v-layout>
-          </div>
-      </v-container>
-    </v-app>
+            >
+            </v-select>
+          </b-card>
+        </b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
@@ -73,17 +57,10 @@ export default {
 </script>
 
 <style lang="sass">
-i
-  font-style: normal!important
-
-.btn__content
-  height: auto
-
 .test
-  color: #000000
-  #inspire
-    margin-top: 20px
-    .beginBtn
-      text-align: center
+  font-family: 'Product Sans', sans-serif
+  font-weight: 500
+.bg-warning
+  font-size: 24px
 </style>
 

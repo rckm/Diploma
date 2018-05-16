@@ -10,16 +10,18 @@ const state = {
 
 // actions
 const actions = {
-  signUp({ commit }, payload) {
+  signUp({
+    commit,
+  }, payload) {
     commit('setLoading', true);
     commit('setError', null);
     firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
       .then((user) => {
         const newUser = {
           id: user.uid,
-          name: user.displayName,
+          // name: user.displayName,
           email: user.email,
-          photoUrl: user.photoUrl,
+          // photoUrl: user.photoUrl,
         };
         commit('setLoading', false);
         commit('setUser', newUser);

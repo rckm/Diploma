@@ -25,13 +25,12 @@
               <ul>
                 <li>
                   <router-link class="menu__reg--items" to="/signIn">
-                    <menu-icon />
                     Войти
                   </router-link>
                 </li>
                 <li>
                   <router-link class="menu__reg--items" to="/signUp">
-                    <span>Зарегистрироваться</span>
+                    Зарегистрироваться
                   </router-link>
                 </li>
               </ul>
@@ -48,7 +47,6 @@
 export default {
   name: 'mainHeader',
   data: () => ({
-    dialog: false,
   }),
 };
 </script>
@@ -59,7 +57,4 @@ ul
   margin: 0
   li
     list-style-type: none
-// i
-//   margin-bottom: 4px
-//   padding-right: 10px
 </style>

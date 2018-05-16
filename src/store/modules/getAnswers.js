@@ -4,7 +4,7 @@ import db from '../../config';
 
 // inital state
 const state = {
-  questions: [],
+  answers: [],
   isLoading: false,
   errors: null,
 };
@@ -12,7 +12,7 @@ const state = {
 // mutations
 const mutations = {
   getData(state, payload) {
-    state.questions = payload;
+    state.answers = payload;
   },
   setLoading(state, payload) {
     state.isLoading = payload;
@@ -25,24 +25,23 @@ const mutations = {
   },
 };
 
-// actions
 const actions = {
-  getAllQuestions({
+  getAllAnswers({
     commit,
-  }, payload) {
+  }) {
     commit('setLoading', true);
     commit('clearError');
-    db
-      .doc(`questions/${payload}`)
-      .get()
-      .then((doc) => {
-        const data = [];
-        data.push({
-          id: doc.id,
-          ...doc.data(),
+    db.collection('answers').get()
+      .then((querySnapshot) => {
+        querySnapshot.docs.forEach((doc) => {
+          const answ = [];
+          answ.push({
+            id: doc.id,
+            ...doc.data(),
+          });
+          commit('getData', answ);
+          commit('setLoading', false);
         });
-        commit('getData', data);
-        commit('setLoading', false);
       });
   },
 };

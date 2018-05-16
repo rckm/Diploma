@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <v-app>
-      <main-header></main-header>
+      <main-header />
       <transition name="slide-fade">
         <router-view></router-view>
       </transition>
@@ -49,9 +49,21 @@ body
   transition: all 1s ease
 
 .slide-fade-leave-active
-  transition: all .0.3s cubic-bezier(1.0, 0.5, 0.8, 1.0)
+  transition: all .1s cubic-bezier(1.0, 0.5, 0.8, 1.0)
 
 .slide-fade-enter, .slide-fade-leave-to
   transform: translateX(10px)
   opacity: 0
+
+::-webkit-scrollbar
+  width: 9px
+
+/* Track */
+::-webkit-scrollbar-track
+  background-color: #E1E1E1
+
+/* Handle */
+::-webkit-scrollbar-thumb
+  background: #303030
+  border-radius: 5px
 </style>

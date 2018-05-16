@@ -20,8 +20,7 @@
                         v-model="email"
                         type="email"
                         required>
-
-                      </v-text-field>
+                        </v-text-field>
                     </v-flex>
                   </v-layout>
 
@@ -33,7 +32,8 @@
                         id="password"
                         v-model="password"
                         type="password"
-                        required></v-text-field>
+                        required>
+                        </v-text-field>
                     </v-flex>
                   </v-layout>
 
@@ -46,19 +46,21 @@
                         v-model="confirmPassword"
                         type="password"
                         required
-                        :rules="[comparePasswords]"
-                        ></v-text-field>
+                        :rules="[comparePasswords]">
+                        </v-text-field>
                     </v-flex>
                   </v-layout>
 
                   <v-layout row>
                     <v-flex xs12>
                       <v-btn :loading="isLoading" class="btn" @click="onSignUp" type="submit">
-                        <span>Зарегестрироваться</span>
+                        Зарегестрироваться
+                      </v-btn>
+                      <v-btn @click="close">
+                        Отмена
                       </v-btn>
                     </v-flex>
                   </v-layout>
-
                 </form>
               </v-container>
             </v-card-text>
@@ -71,6 +73,7 @@
 
 <script>
 import { mapState } from 'vuex';
+import router from '../../router';
 
 export default {
   name: 'formRegistration',
@@ -101,6 +104,9 @@ export default {
         email: this.email,
         password: this.password,
       });
+    },
+    close() {
+      return router.go(-1);
     },
   },
 };

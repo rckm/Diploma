@@ -12,8 +12,7 @@
               v-model="selectedTest"
               single-line
               item-text="name"
-              :loading="isLoading"
-            >
+              :loading="isLoading">
             </v-select>
           </b-card>
         </b-col>

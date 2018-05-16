@@ -27,7 +27,9 @@ const mutations = {
 
 // actions
 const actions = {
-  getNameOfTest({ commit }) {
+  getNameOfTest({
+    commit,
+  }) {
     commit('setLoading', true);
     commit('clearError');
     db.collection('tests').get()

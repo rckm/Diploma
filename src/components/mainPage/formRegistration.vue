@@ -1,74 +1,83 @@
 <template>
-  <div class="form">
-    <v-container>
-      <v-layout row>
-        <v-flex xs12 sm6 offset-sm3>
-          <v-card>
-            <v-card-text>
-              <v-container>
-                <div style="color: red;" v-if="isError">
-                  <span> {{ isError.message }} </span>
-                </div>
-                <form @submit.prevent="onSignUp">
+  <v-form @submit.prevent="onSignUp">
+    <v-layout row justify-center>
+      <v-dialog v-model="regDialogModal" max-width="500px">
+        <v-card>
+          <v-card-title>
+            <span class="headline">Регистрация</span>
+          </v-card-title>
+          <v-card-text>
+            <v-container grid-list-md>
+              <v-layout row>
+                <v-flex xs12>
+                  <v-text-field
+                    name="email"
+                    label="Почта"
+                    id="regEmail"
+                    v-model="email"
+                    type="email"
+                    :rules="emailRules"
+                    required>
+                    </v-text-field>
+                </v-flex>
+              </v-layout>
 
-                  <v-layout row>
-                    <v-flex xs12>
-                      <v-text-field
-                        name="email"
-                        label="Почта"
-                        id="email"
-                        v-model="email"
-                        type="email"
-                        required>
-                        </v-text-field>
-                    </v-flex>
-                  </v-layout>
+              <v-layout row>
+                <v-flex xs12>
+                  <v-text-field
+                    name="name"
+                    label="Имя"
+                    id="regName"
+                    v-model="name"
+                    type="name"
+                    :rules="nameRules"
+                    required>
+                    </v-text-field>
+                </v-flex>
+              </v-layout>
 
-                  <v-layout row>
-                    <v-flex xs12>
-                      <v-text-field
-                        name="password"
-                        label="Пароль"
-                        id="password"
-                        v-model="password"
-                        type="password"
-                        required>
-                        </v-text-field>
-                    </v-flex>
-                  </v-layout>
+              <v-layout row>
+                <v-flex xs12>
+                  <v-text-field
+                    name="password"
+                    label="Пароль"
+                    id="regPassword"
+                    v-model="password"
+                    type="password"
+                    :rules="passRules"
+                    required>
+                    </v-text-field>
+                </v-flex>
+              </v-layout>
 
-                  <v-layout row>
-                    <v-flex xs12>
-                      <v-text-field
-                        name="confirmPassword"
-                        label="Повторите пароль"
-                        id="confirmPassword"
-                        v-model="confirmPassword"
-                        type="password"
-                        required
-                        :rules="[comparePasswords]">
-                        </v-text-field>
-                    </v-flex>
-                  </v-layout>
-
-                  <v-layout row>
-                    <v-flex xs12>
-                      <v-btn :loading="isLoading" class="btn" @click="onSignUp" type="submit">
-                        Зарегестрироваться
-                      </v-btn>
-                      <v-btn @click="close">
-                        Отмена
-                      </v-btn>
-                    </v-flex>
-                  </v-layout>
-                </form>
-              </v-container>
-            </v-card-text>
-          </v-card>
-        </v-flex>
-      </v-layout>
-    </v-container>
-  </div>
+              <v-layout row>
+                <v-flex xs12>
+                  <v-text-field
+                    name="confirmPassword"
+                    label="Повторите пароль"
+                    id="confirmPassword"
+                    v-model="confirmPassword"
+                    type="password"
+                    required
+                    :rules="[comparePasswords]">
+                    </v-text-field>
+                </v-flex>
+              </v-layout>
+            </v-container>
+            <small>*обязательные поля</small>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" @click="regDialogModal = false">Закрыть</v-btn>
+            <v-btn :loading="isLoading"
+              :disabled="!email.length > 5 && !password.length > 5"
+              color="blue darken-1"
+              @click="onSignUp">Зарегистрироваться</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-layout>
+  </v-form>
 </template>
 
 <script>
@@ -78,31 +87,65 @@ import router from '../../router';
 export default {
   name: 'formRegistration',
 
+  props: ['regDialog'],
+
   data() {
     return {
       email: '',
+      name: '',
       password: '',
       confirmPassword: '',
+      regDialogModal: this.regDialog,
     };
+  },
+
+  watch: {
+    regDialog() {
+      this.regDialogModal = this.regDialog;
+    },
+    regDialogModal() {
+      if (this.regDialogModal === false) {
+        this.$emit('updateRegModal');
+      }
+    },
   },
 
   computed: {
     comparePasswords() {
-      return this.password === this.confirmPassword
-        ? true
-        : 'Passwords don`t match';
+      return this.password === this.confirmPassword ? true : 'Passwords don`t match';
+    },
+    nameRules() {
+      return [
+        v => !!v || 'Name is required',
+        v => v.length <= 10 || 'Name must be less than 10 characters',
+      ];
+    },
+    emailRules() {
+      return [
+        v => !!v || 'E-mail is required',
+        v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid',
+      ];
+    },
+    passRules() {
+      return [
+        v =>
+          /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/.test(v) ||
+          'Пароль должен иметь минимум 6 символов и должен содержать одну букву и одну цифру',
+      ];
     },
     ...mapState({
-      isLoading: state => state.signUp.isLoading,
-      isError: state => state.signUp.errors,
+      isLoading: state => state.auth.isLoading,
+      isError: state => state.auth.errors,
     }),
   },
 
   methods: {
     onSignUp() {
-      return this.$store.dispatch('signUp/signUp', {
+      this.$emit('updateModal');
+      return this.$store.dispatch('auth/signUp', {
         email: this.email,
         password: this.password,
+        name: this.name,
       });
     },
     close() {
@@ -117,6 +160,15 @@ export default {
   height: auto
 .form
   text-align: center
-  padding-top: 200px
   color: #000000
+  &:before
+    content: ''
+    position: absolute
+    left: 0
+    right: 0
+    top: 0
+    bottom: 0
+    width: 100%
+    height: 100%
+    background-color: rgba(0,0,0,0.3)
 </style>

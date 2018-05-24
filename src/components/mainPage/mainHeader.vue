@@ -22,16 +22,35 @@
 
           <b-col md="3" align-self="center" class="justify-content-end">
             <nav class="menu__reg">
-              <ul>
+              <ul v-if="!isUser" >
                 <li>
-                  <router-link class="menu__reg--items" to="/signIn">
-                    Войти
-                  </router-link>
+                  <a
+                    class="menu__reg--items"
+                    @click="openAuthModal"
+                    color="primary"
+                    flat>Войти</a>
                 </li>
                 <li>
-                  <router-link class="menu__reg--items" to="/signUp">
-                    Зарегистрироваться
-                  </router-link>
+                  <a
+                    class="menu__reg--items"
+                    @click="openRegModal"
+                    color="primary"
+                    flat>Зарегистрироваться</a>
+                </li>
+              </ul>
+              <ul v-if="isUser" >
+                <li>
+                  <a
+                    class="menu__reg--items"
+                    color="primary"
+                    flat>{{ authorizedUser.email }}</a>
+                </li>
+                <li>
+                  <a
+                    @click="signOut"
+                    class="menu__reg--items"
+                    color="primary"
+                    flat>Выйти</a>
                 </li>
               </ul>
             </nav>
@@ -44,10 +63,29 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'mainHeader',
-  data: () => ({
-  }),
+  data: () => ({}),
+
+  methods: {
+    openRegModal() {
+      this.$emit('openRegModal');
+    },
+    openAuthModal() {
+      this.$emit('openAuthModal');
+    },
+    signOut() {
+      this.$store.dispatch('auth/signOut');
+    },
+  },
+  computed: {
+    ...mapGetters({
+      isUser: 'auth/isUser',
+      authorizedUser: 'auth/authorizedUser',
+    }),
+  },
 };
 </script>
 

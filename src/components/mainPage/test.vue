@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState } from 'vuex';
 import router from '../../router';
 
 export default {
@@ -37,13 +37,10 @@ export default {
       isLoading: state => state.getName.isLoading,
       getName: state => state.getName.names,
     }),
-    ...mapActions({
-      getNameOfTest: 'getName/getNameOfTest',
-    }),
   },
-  created() {
+  mounted() {
     if (!this.getName.length > 0) {
-      return this.getNameOfTest;
+      return this.$store.dispatch('getName/getNameOfTest');
     }
     return null;
   },

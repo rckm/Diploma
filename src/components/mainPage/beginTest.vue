@@ -1,13 +1,21 @@
 <template>
   <div class="beginTest">
-    <div :key="(value, i)" v-for="(value, i) in getQuestions">
-      <h1>{{ value.title }}</h1>
-    </div>
+    <b-container>
+      <div :key="(value, i)" v-for="(value, i) in getQuestions">
+        <h1>{{ value.title }}</h1>
+      </div>
+      <div>
+        <v-radio-group :key="item.id" v-for="item in getAnswers">
+          <v-radio :label="item.title">
+          </v-radio>
+        </v-radio-group>
+      </div>
+    </b-container>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState } from 'vuex';
 
 export default {
   name: 'beginTest',
@@ -22,17 +30,10 @@ export default {
       getQuestions: state => state.getQuestions.questions,
       getAnswers: state => state.getAnswers.answers,
     }),
-    ...mapActions({
-      getActionQuestions: 'getQuestions/getAllQuestions',
-      getActionAnswers: 'getAnswers/getAllAnswers',
-    }),
   },
-  created() {
+  mounted() {
     this.$store.dispatch('getQuestions/getAllQuestions', this.test_id);
-    if (!this.getAnswers.length > 0) {
-      return this.getActionAnswers;
-    }
-    return null;
+    this.$store.dispatch('getAnswers/getAllAnswers', +this.$route.params.id);
   },
 };
 </script>

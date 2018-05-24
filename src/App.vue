@@ -1,10 +1,15 @@
 <template>
   <div id="app">
     <v-app>
-      <main-header />
+      <main-header @openRegModal="openRegModal" @openAuthModal="openAuthModal" />
       <transition name="slide-fade">
         <router-view></router-view>
       </transition>
+      <form-registration
+        @updateRegModal="updateRegModal"
+        :regDialog="regDialog" >
+      </form-registration>
+      <sign-in @updateAuthModal="updateAuthModal" :authDialog="authDialog" ></sign-in>
     </v-app>
   </div>
 </template>
@@ -12,6 +17,8 @@
 <script>
 import firebase from 'firebase';
 import header from './components/mainPage/mainHeader.vue';
+import formRegistration from './components/mainPage/formRegistration.vue';
+import signIn from './components/mainPage/signIn.vue';
 
 const config = {
   apiKey: 'AIzaSyDF6e6k4DN8ap4hVdmgc8jk1bW_gYtqqUU',
@@ -28,10 +35,27 @@ export default {
   name: 'App',
   components: {
     'main-header': header,
+    'form-registration': formRegistration,
+    'sign-in': signIn,
   },
-  data() {
-    return {
-    };
+  data: () => ({
+    regDialog: false,
+    authDialog: false,
+  }),
+
+  methods: {
+    openRegModal() {
+      this.regDialog = true;
+    },
+    updateRegModal() {
+      this.regDialog = false;
+    },
+    openAuthModal() {
+      this.authDialog = true;
+    },
+    updateAuthModal() {
+      this.authDialog = false;
+    },
   },
 };
 </script>
@@ -40,6 +64,7 @@ export default {
 @import './assets/sass/_fonts.sass'
 body
   background-color: #ffffff
+  position: relative
 
 #app
   -webkit-font-smoothing: antialiased

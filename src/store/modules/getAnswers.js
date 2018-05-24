@@ -25,23 +25,23 @@ const mutations = {
   },
 };
 
+// actions
 const actions = {
-  getAllAnswers({
-    commit,
-  }) {
+  getAllAnswers({ commit }, payload) {
     commit('setLoading', true);
     commit('clearError');
-    db.collection('answers').get()
+    db.collection('answers').where('quest_id', '==', payload)
+      .get()
       .then((querySnapshot) => {
-        querySnapshot.docs.forEach((doc) => {
-          const answ = [];
+        const answ = [];
+        querySnapshot.forEach((doc) => {
           answ.push({
             id: doc.id,
             ...doc.data(),
           });
-          commit('getData', answ);
-          commit('setLoading', false);
         });
+        commit('getData', answ);
+        commit('setLoading', false);
       });
   },
 };

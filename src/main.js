@@ -20,4 +20,7 @@ new Vue({
   router,
   store,
   render: h => h(App),
+  beforeCreate() {
+    this.$store.dispatch('auth/checkStatusAuth');
+  },
 }).$mount('#app');

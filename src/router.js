@@ -1,33 +1,36 @@
-import Vue from 'vue';
-import Router from 'vue-router';
-import homePage from './components/homePage.vue';
-import test from './components/mainPage/test.vue';
-import beginTest from './components/mainPage/beginTest.vue';
-import addTest from './components/adminPage/addTest.vue';
+/* eslint-disable */
+import Vue        from 'vue';
+import Router     from 'vue-router';
+import homePage   from './components/homePage.vue';
+import test       from './components/mainPage/test.vue';
+import beginTest  from './components/mainPage/beginTest.vue';
+import addTest    from './components/adminPage/addTest.vue';
+/* eslint-enable */
 
 Vue.use(Router);
 
 export default new Router({
   mode: 'history',
-  routes: [{
-    path: '/',
-    name: 'homePage',
-    component: homePage,
-  },
-  {
-    path: '/test',
-    name: 'test',
-    component: test,
-  },
-  {
-    path: '/test/beginTest/:id',
-    name: 'beginTest',
-    component: beginTest,
-  },
-  {
-    path: '/admin',
-    name: 'admin',
-    component: addTest,
-  },
+  routes: [
+    {
+      path: '/',
+      name: 'homePage',
+      component: homePage,
+    },
+    {
+      path: '/test',
+      name: 'test',
+      component: test,
+    },
+    {
+      path: '/test/beginTest/:id',
+      name: 'beginTest',
+      component: beginTest,
+    },
+    {
+      path: '/admin',
+      name: 'admin',
+      component: addTest,
+    },
   ],
 });

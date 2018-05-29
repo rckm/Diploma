@@ -1,6 +1,9 @@
 /* eslint no-shadow: ["error", { "allow": ["state"] }], no-param-reassign: "error" */
+/* eslint-disable */
 import firebase from 'firebase';
-import router from '../../router';
+import router   from '../../router';
+/* eslint-enable */
+
 // initial state
 const state = {
   user: null,
@@ -15,7 +18,7 @@ const actions = {
   }, payload) {
     commit('setLoading', true);
     commit('setError', null);
-    firebase.auth().createUserWithEmailAndPassword(payload.name, payload.email, payload.password)
+    firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
       .then(() => {
         commit('setLoading', false);
         router.push('/');
@@ -25,6 +28,7 @@ const actions = {
         commit('setError', error.message);
       });
   },
+
   signIn({
     commit,
   }, payload) {
@@ -39,23 +43,25 @@ const actions = {
         commit('setLoading', false);
       });
   },
+/* eslint-disable */
   checkStatusAuth({
     commit,
   }) {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         commit('setUser', {
-          displayName: user.displayName,
-          email: user.email,
+          displayName  : user.displayName  ,
+          email        : user.email        ,
           emailVerified: user.emailVerified,
-          photoURL: user.photoURL,
-          isAnonymous: user.isAnonymous,
-          uid: user.uid,
-          providerData: user.providerData,
+          photoURL     : user.photoURL     ,
+          isAnonymous  : user.isAnonymous  ,
+          uid          : user.uid          ,
+          providerData : user.providerData ,
         });
       }
     });
   },
+  /* eslint-enable */
   signOut({
     commit,
   }) {

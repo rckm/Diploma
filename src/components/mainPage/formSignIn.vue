@@ -63,6 +63,7 @@ export default {
     return {
       email: '',
       password: '',
+      name: '',
       authDialogModal: this.authDialog,
     };
   },
@@ -77,14 +78,14 @@ export default {
       }
     },
   },
-
+  /* eslint-disable */
   computed: {
     ...mapState({
       isLoading: state => state.auth.isLoading,
-      isError: state => state.auth.errors,
+      isError  : state => state.auth.errors   ,
     }),
   },
-
+  /* eslint-enable */
   methods: {
     onSignIn() {
       this.$emit('updateAuthModal');

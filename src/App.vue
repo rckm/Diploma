@@ -15,29 +15,32 @@
 </template>
 
 <script>
-import firebase from 'firebase';
-import header from './components/mainPage/mainHeader.vue';
+/* eslint-disable */
+import firebase         from 'firebase'                                  ;
+import header           from './components/mainPage/mainHeader.vue'      ;
 import formRegistration from './components/mainPage/formRegistration.vue';
-import signIn from './components/mainPage/signIn.vue';
+import signIn           from './components/mainPage/formSignIn.vue'      ;
 
 const config = {
-  apiKey: 'AIzaSyDF6e6k4DN8ap4hVdmgc8jk1bW_gYtqqUU',
-  authDomain: 'dimploma-15629.firebaseapp.com',
-  databaseURL: 'https://dimploma-15629.firebaseio.com',
-  projectId: 'dimploma-15629',
-  storageBucket: 'dimploma-15629.appspot.com',
-  messagingSenderId: '697514897633',
+  apiKey           : 'AIzaSyDF6e6k4DN8ap4hVdmgc8jk1bW_gYtqqUU',
+  authDomain       : 'dimploma-15629.firebaseapp.com'         ,
+  databaseURL      : 'https://dimploma-15629.firebaseio.com'  ,
+  projectId        : 'dimploma-15629'                         ,
+  storageBucket    : 'dimploma-15629.appspot.com'             ,
+  messagingSenderId: '697514897633'                           ,
 };
 
 firebase.initializeApp(config);
 
 export default {
   name: 'App',
+
   components: {
-    'main-header': header,
+    'main-header'      : header          ,
     'form-registration': formRegistration,
-    'sign-in': signIn,
+    'sign-in'          : signIn          ,
   },
+  /* eslint-enable */
   data: () => ({
     regDialog: false,
     authDialog: false,
@@ -57,6 +60,7 @@ export default {
       this.authDialog = false;
     },
   },
+
 };
 </script>
 
@@ -81,7 +85,7 @@ body
   opacity: 0
 
 ::-webkit-scrollbar
-  width: 9px
+  width: 8px
 
 /* Track */
 ::-webkit-scrollbar-track

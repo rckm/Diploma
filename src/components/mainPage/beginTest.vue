@@ -19,22 +19,26 @@ import { mapState } from 'vuex';
 
 export default {
   name: 'beginTest',
+
   data() {
     return {
       test_id: this.$route.params.id,
     };
   },
+  /* eslint-disable */
   computed: {
     ...mapState({
-      isLoading: state => state.getName.isLoading,
+      isLoading   : state => state.getName     .isLoading,
       getQuestions: state => state.getQuestions.questions,
-      getAnswers: state => state.getAnswers.answers,
+      getAnswers  : state => state.getAnswers  .answers  ,
     }),
   },
+  /* eslint-enable */
   mounted() {
     this.$store.dispatch('getQuestions/getAllQuestions', this.test_id);
     this.$store.dispatch('getAnswers/getAllAnswers', +this.$route.params.id);
   },
+
 };
 </script>
 

@@ -25,20 +25,6 @@
               <v-layout row>
                 <v-flex xs12>
                   <v-text-field
-                    name="name"
-                    label="Имя"
-                    id="regName"
-                    v-model="name"
-                    type="name"
-                    :rules="nameRules"
-                    required>
-                    </v-text-field>
-                </v-flex>
-              </v-layout>
-
-              <v-layout row>
-                <v-flex xs12>
-                  <v-text-field
                     name="password"
                     label="Пароль"
                     id="regPassword"
@@ -69,8 +55,9 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="blue darken-1" @click="regDialogModal = false">Закрыть</v-btn>
-            <v-btn :loading="isLoading"
-              :disabled="!email.length > 5 && !password.length > 5"
+            <v-btn
+              :loading="isLoading"
+              :disabled="email.length == '' && password.length == ''"
               color="blue darken-1"
               @click="onSignUp">Зарегистрироваться</v-btn>
           </v-card-actions>
@@ -92,7 +79,6 @@ export default {
   data() {
     return {
       email: '',
-      name: '',
       password: '',
       confirmPassword: '',
       regDialogModal: this.regDialog,
@@ -114,12 +100,12 @@ export default {
     comparePasswords() {
       return this.password === this.confirmPassword ? true : 'Passwords don`t match';
     },
-    nameRules() {
-      return [
-        v => !!v || 'Name is required',
-        v => v.length <= 10 || 'Name must be less than 10 characters',
-      ];
-    },
+    // nameRules() {
+    //   return [
+    //     v => !!v || 'Name is required',
+    //     v => v.length <= 10 || 'Name must be less than 10 characters',
+    //   ];
+    // },
     emailRules() {
       return [
         v => !!v || 'E-mail is required',
@@ -128,15 +114,16 @@ export default {
     },
     passRules() {
       return [
-        v =>
-          /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/.test(v) ||
-          'Пароль должен иметь минимум 6 символов и должен содержать одну букву и одну цифру',
+        v => /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/.test(v) ||
+        'Пароль должен иметь минимум 6 символов и должен содержать одну букву и одну цифру',
       ];
     },
+    /* eslint-disable */
     ...mapState({
       isLoading: state => state.auth.isLoading,
-      isError: state => state.auth.errors,
+      isError  : state => state.auth.errors   ,
     }),
+    /* eslint-enable */
   },
 
   methods: {
@@ -145,7 +132,6 @@ export default {
       return this.$store.dispatch('auth/signUp', {
         email: this.email,
         password: this.password,
-        name: this.name,
       });
     },
     close() {
@@ -161,14 +147,4 @@ export default {
 .form
   text-align: center
   color: #000000
-  &:before
-    content: ''
-    position: absolute
-    left: 0
-    right: 0
-    top: 0
-    bottom: 0
-    width: 100%
-    height: 100%
-    background-color: rgba(0,0,0,0.3)
 </style>

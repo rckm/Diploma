@@ -67,7 +67,11 @@ import { mapGetters } from 'vuex';
 
 export default {
   name: 'mainHeader',
-  data: () => ({}),
+
+  data() {
+    return {
+    };
+  },
 
   methods: {
     openRegModal() {

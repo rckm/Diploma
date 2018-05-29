@@ -1,16 +1,17 @@
-import Vue from 'vue';
-import Vuetify from 'vuetify';
+/* eslint-disable */
+import Vue          from 'vue';
+import Vuetify      from 'vuetify';
 import BootstrapVue from 'bootstrap-vue';
 import 'firebase/firestore';
 
 import 'bootstrap-vue/dist/bootstrap-vue.css';
-import 'bootstrap/dist/css/bootstrap.css'; /* eslint-disable-line */
+import 'bootstrap/dist/css/bootstrap.css';
 import 'vuetify/dist/vuetify.min.css';
 
-import App from './App.vue';
+import App    from './App.vue';
 import router from './router';
-import store from './store';
-
+import store  from './store';
+/* eslint-enable */
 Vue.config.productionTip = false;
 
 Vue.use(BootstrapVue);

@@ -21,7 +21,12 @@
           </b-col>
 
           <b-col md="3" align-self="center" class="justify-content-end">
-            <nav class="menu__reg">
+            <v-progress-circular
+                    v-if="isLoading"
+                    indeterminate
+                    color="yellow">
+            </v-progress-circular>
+            <nav class="menu__reg" v-else>
               <ul v-if="!isUser" >
                 <li>
                   <a
@@ -40,10 +45,20 @@
               </ul>
               <ul v-if="isUser" >
                 <li>
+                  <v-progress-circular
+                    v-if="isLoading"
+                    indeterminate
+                    color="yellow">
+                  </v-progress-circular>
                   <a
                     class="menu__reg--items"
                     color="primary"
-                    flat>{{ authorizedUser.email }}</a>
+                    v-else
+                    flat>
+                      {{ authorizedUser.displayName }}
+                      {{ authorizedUser.secondName }}
+                      {{ authorizedUser.middleName }}
+                    </a>
                 </li>
                 <li>
                   <a
@@ -63,7 +78,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 
 export default {
   name: 'mainHeader',
@@ -88,6 +103,10 @@ export default {
     ...mapGetters({
       isUser: 'auth/isUser',
       authorizedUser: 'auth/authorizedUser',
+    }),
+    ...mapState({
+      isLoading: state => state.auth.isLoading,
+      isError: state => state.auth.errors,
     }),
   },
 };

@@ -37,7 +37,10 @@
     "extends": [
       "plugin:vue/essential",
       "@vue/airbnb"
-    ]
+    ],
+    "rules": {
+      "no-multi-spaces": 0
+    }
   },
   "postcss": {
     "plugins": {

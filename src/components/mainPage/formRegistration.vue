@@ -1,5 +1,5 @@
 <template>
-  <v-form @submit.prevent="onSignUp">
+  <v-form>
     <v-layout row justify-center>
       <v-dialog v-model="regDialogModal" max-width="700px">
         <v-card>
@@ -101,7 +101,8 @@
             <v-btn
               :loading="isLoading"
               color="blue darken-1"
-              @click="onSignUp">Зарегистрироваться</v-btn>
+              @click="onSignUp"
+              >Зарегистрироваться</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -126,7 +127,7 @@ export default {
     secondName: { required, maxLength: maxLength(10) },
     middleName: { required, maxLength: maxLength(15) },
     email: { required, email },
-    password: { required, maxLength: maxLength(6), minLength: minLength(4) },
+    password: { required, maxLength: maxLength(8), minLength: minLength(4) },
     confirmPassword: { required, sameAsPassword: sameAs('password') },
   },
 
@@ -195,7 +196,7 @@ export default {
     passwordErrors() {
       const errors = [];
       if (!this.$v.password.$dirty) return errors;
-      if (!this.$v.password.maxLength && !this.$v.password.minLength) {
+      if (!this.$v.password.maxLength || !this.$v.password.minLength) {
         errors.push('Пароль должен иметь не меньше 4 и не больше 6 символов ');
       }
       if (!this.$v.password.required) {

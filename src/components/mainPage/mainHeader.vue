@@ -13,7 +13,9 @@
           <b-col md="6" align-self="center">
             <nav class="menu">
               <ul>
-                <li><router-link class="menu__items" to="/test">Тест</router-link></li>
+                <li v-if="authorizedUser">
+                  <router-link class="menu__items" to="/test">Тест</router-link>
+                </li>
                 <li><router-link class="menu__items" to="/contacts">Контакты</router-link></li>
                 <li><router-link class="menu__items" to="/about">О нас</router-link></li>
               </ul>
@@ -55,8 +57,8 @@
                     color="primary"
                     v-else
                     flat>
-                      {{ authorizedUser.displayName }}
                       {{ authorizedUser.secondName }}
+                      {{ authorizedUser.displayName }}
                       {{ authorizedUser.middleName }}
                     </a>
                 </li>

@@ -1,16 +1,20 @@
 <template>
   <div class="beginTest">
-    <b-container>
-      <div :key="(value, i)" v-for="(value, i) in getQuestions">
-        <h1>{{ value.title }}</h1>
-      </div>
-      <div>
-        <v-radio-group :key="item.id" v-for="item in getAnswers">
-          <v-radio :label="item.title">
-          </v-radio>
-        </v-radio-group>
-      </div>
-    </b-container>
+    <b-form>
+      <b-container>
+        <b-tabs pills card>
+          <b-tab
+            :key="value.id"
+            v-for="(value, index) in getQuestions"
+            :title="(`Вопрос № ${index + 1}`)">
+            <h1>{{value.title}}</h1>
+              <b-form-group :key="item.id" v-for="(item) in getAnswers">
+                <b-form-radio-group :options="[item.title]"></b-form-radio-group>
+              </b-form-group>
+          </b-tab>
+        </b-tabs>
+      </b-container>
+    </b-form>
   </div>
 </template>
 
@@ -25,15 +29,15 @@ export default {
       test_id: this.$route.params.id,
     };
   },
-  /* eslint-disable */
+
   computed: {
     ...mapState({
-      isLoading   : state => state.getName     .isLoading,
+      isLoading: state => state.getName.isLoading,
       getQuestions: state => state.getQuestions.questions,
-      getAnswers  : state => state.getAnswers  .answers  ,
+      getAnswers: state => state.getAnswers.answers,
     }),
   },
-  /* eslint-enable */
+
   mounted() {
     this.$store.dispatch('getQuestions/getAllQuestions', this.test_id);
     this.$store.dispatch('getAnswers/getAllAnswers', +this.$route.params.id);

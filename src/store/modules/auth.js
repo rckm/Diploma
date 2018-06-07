@@ -20,10 +20,12 @@ const actions = {
     firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
       .then(async (user) => {
         await db.doc(`users/${user.uid}`).set({
+          uid: user.uid,
           displayName: payload.displayName,
           secondName: payload.secondName,
           middleName: payload.middleName,
-          uid: user.uid,
+          email: payload.email,
+          registeredDateAt: new Date().toLocaleDateString(),
         });
         await commit('setLoading', false);
         await router.push('/');
@@ -58,23 +60,19 @@ const actions = {
     commit('setLoading', true);
     firebase.auth().onAuthStateChanged((userLocal) => {
       if (userLocal) {
-        commit('setLoading', true);
         db.doc(`users/${userLocal.uid}`).get()
           .then(doc => {
             commit('setUser', {
               displayName   : doc.data().displayName,
               secondName    : doc.data().secondName,
               middleName    : doc.data().middleName,
-              email         : userLocal.email,
-              emailVerified : userLocal.emailVerified,
+              email         : doc.data().email,
               uid           : doc.data().uid,
-              providerData  : userLocal.providerData,
             });
             commit('setLoading', false);
           });
-      } else {
-        commit('setLoading', false);
       }
+      commit('setLoading', false);
     });
   },
   /* eslint-enable */

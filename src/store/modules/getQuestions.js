@@ -5,7 +5,7 @@ import db from '../../config';
 // inital state
 const state = {
   questions: [],
-  isLoading: false,
+  isLoading: true,
   errors: null,
 };
 
@@ -33,17 +33,28 @@ const actions = {
     commit('setLoading', true);
     commit('clearError');
     db
-      .doc(`questions/${payload}`)
+      .collection('questions').where('test_id', '==', payload)
       .get()
-      .then((doc) => {
-        const data = [];
-        data.push({
-          id: doc.id,
-          ...doc.data(),
+      .then((querySnaphsot) => {
+        const quest = [];
+        querySnaphsot.forEach((doc) => {
+          quest.push({
+            id: doc.id,
+            ...doc.data(),
+          });
         });
-        commit('getData', data);
+        commit('getData', quest);
         commit('setLoading', false);
       });
+  },
+};
+
+const getters = {
+  getId(state) {
+    return state.questions.reduce((acc, item) => {
+      acc.push(item.id);
+      return acc;
+    }, []);
   },
 };
 
@@ -51,5 +62,6 @@ export default {
   namespaced: true,
   state,
   mutations,
+  getters,
   actions,
 };

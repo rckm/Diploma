@@ -5,7 +5,7 @@ import db from '../../config';
 // inital state
 const state = {
   answers: [],
-  isLoading: false,
+  isLoading: true,
   errors: null,
 };
 
@@ -30,19 +30,22 @@ const actions = {
   getAllAnswers({ commit }, payload) {
     commit('setLoading', true);
     commit('clearError');
-    db.collection('answers').where('quest_id', '==', payload)
-      .get()
-      .then((querySnapshot) => {
-        const answ = [];
-        querySnapshot.forEach((doc) => {
-          answ.push({
-            id: doc.id,
-            ...doc.data(),
+    const answ = [];
+    payload.forEach((id) => {
+      db.collection('answers').where('quest_id', '==', id)
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            answ.push({
+              id: doc.id,
+              ...doc.data(),
+            });
+            commit('getData', Array.of(...answ));
           });
         });
-        commit('getData', answ);
-        commit('setLoading', false);
-      });
+    });
+
+    commit('setLoading', false);
   },
 };
 

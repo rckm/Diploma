@@ -3,13 +3,18 @@
     <b-form>
       <b-container>
         <b-tabs pills card>
+          <div v-if="isLoadingQuest" >Loading...</div>
           <b-tab
-            :key="value.id"
-            v-for="(value, index) in getQuestions"
+            v-else
+            :key="question.id"
+            v-for="(question, index) in getQuestions"
             :title="(`Вопрос № ${index + 1}`)">
-            <h1>{{value.title}}</h1>
-              <b-form-group :key="item.id" v-for="(item) in getAnswers">
-                <b-form-radio-group :options="[item.title]"></b-form-radio-group>
+            <h1>{{question.title}}</h1>
+              <b-form-group
+                v-for="answer in getAnswers"
+                v-if="answer.quest_id === question.id && !isLoadingAns"
+                :key="answer.id">
+                <b-form-radio-group :options="[answer.answer]"></b-form-radio-group>
               </b-form-group>
           </b-tab>
         </b-tabs>
@@ -19,7 +24,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 
 export default {
   name: 'beginTest',
@@ -32,17 +37,27 @@ export default {
 
   computed: {
     ...mapState({
-      isLoading: state => state.getName.isLoading,
+      isLoadingQuest: state => state.getQuestions.isLoading,
+      isLoadingAns: state => state.getAnswers.isLoading,
       getQuestions: state => state.getQuestions.questions,
       getAnswers: state => state.getAnswers.answers,
     }),
+    ...mapGetters({
+      getId: 'getQuestions/getId',
+    }),
   },
 
-  mounted() {
+  watch: {
+    isLoadingQuest() {
+      if (!this.isLoadingQuest) {
+        this.$store.dispatch('getAnswers/getAllAnswers', this.getId);
+      }
+    },
+  },
+
+  created() {
     this.$store.dispatch('getQuestions/getAllQuestions', this.test_id);
-    this.$store.dispatch('getAnswers/getAllAnswers', +this.$route.params.id);
   },
-
 };
 </script>
 

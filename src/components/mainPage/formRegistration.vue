@@ -1,5 +1,5 @@
 <template>
-  <v-form>
+  <v-form @submit.prevent="onSignUp">
     <v-layout row justify-center>
       <v-dialog v-model="regDialogModal" max-width="700px">
         <v-card>

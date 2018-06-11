@@ -1,9 +1,10 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import addTest from './components/adminPage/addTest.vue';
+import signIn from './components/adminPage/signIn.vue';
 import homePage from './components/homePage.vue';
 import beginTest from './components/mainPage/beginTest.vue';
 import test from './components/mainPage/test.vue';
+import panel from './components/adminPage/panel.vue';
 
 Vue.use(Router);
 
@@ -28,7 +29,12 @@ export default new Router({
     {
       path: '/admin',
       name: 'admin',
-      component: addTest,
+      component: signIn,
+    },
+    {
+      path: '/admin/panel',
+      name: 'adminPanel',
+      component: panel,
     },
   ],
 });

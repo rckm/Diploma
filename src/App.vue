@@ -10,6 +10,7 @@
         :regDialog="regDialog" >
       </form-registration>
       <sign-in @updateAuthModal="updateAuthModal" :authDialog="authDialog" ></sign-in>
+      <mainFooter></mainFooter>
     </v-app>
   </div>
 </template>
@@ -20,6 +21,7 @@ import firebase         from 'firebase'                                  ;
 import header           from './components/mainPage/mainHeader.vue'      ;
 import formRegistration from './components/mainPage/formRegistration.vue';
 import signIn           from './components/mainPage/formSignIn.vue'      ;
+import mainFooter           from './components/mainPage/mainFooter.vue'  ;
 
 const config = {
   apiKey           : 'AIzaSyDF6e6k4DN8ap4hVdmgc8jk1bW_gYtqqUU',
@@ -39,6 +41,7 @@ export default {
     'main-header'      : header          ,
     'form-registration': formRegistration,
     'sign-in'          : signIn          ,
+    'mainFooter'       : mainFooter      ,
   },
   /* eslint-enable */
   data: () => ({
@@ -95,4 +98,7 @@ body
 ::-webkit-scrollbar-thumb
   background: #303030
   border-radius: 5px
+
+.btn__content
+  height: auto
 </style>

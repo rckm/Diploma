@@ -10,6 +10,7 @@
   "dependencies": {
     "bootstrap-vue": "^2.0.0-rc.9",
     "firebase": "^4.13.1",
+    "uuid": "^3.2.1",
     "vue": "^2.5.16",
     "vue-material-design-icons": "^1.4.0",
     "vue-router": "^3.0.1",

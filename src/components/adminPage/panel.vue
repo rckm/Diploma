@@ -1,90 +1,142 @@
 <template>
   <b-container>
+
     <b-row class="justify-content-md-center">
+
       <b-col col lg="4">
-        <h1>Создать новый</h1>
-        <v-text-field v-model="nameOfSubject" solo label="Название предмета"></v-text-field>
+        <h1>Добавить новый предмет</h1>
+        <v-text-field
+          v-model="newTests.nameOfSubject" solo label="Название предмета"></v-text-field>
         <div class="btn-center">
           <v-btn @click.native="onSelectOfSubject" color="info">Добавить</v-btn>
         </div>
       </b-col>
+
       <b-col col lg="4">
         <h1>Выбрать из существующего</h1>
         <v-select
-          :items="items"
+          :items="testName"
           v-model="selected"
-          :hint="`${selected.item}`"
           label="Выбрать предмет"
           single-line
-          item-text="item"
+          item-text="name"
           return-object
           persistent-hint
         ></v-select>
       </b-col>
+
     </b-row>
-    <b-row v-if="selectedOfSubject" class="justify-content-md-center add-test">
+
+    <b-row v-if="selected" class="justify-content-md-center add-test">
       <b-col col lg="4">
-        <div :key="i" v-for="(newTestsItem, i) in newTests">
+        <div :key="i" v-for="(newTestsItem, i) in newTestData">
           <v-text-field
-            v-model="newTestsItem.question" solo label="Название Вопроса"></v-text-field>
+            v-model="newTestsItem.questionTitle" solo label="Название Вопроса"></v-text-field>
           <ul class="options-of-tests">
-            <li :key="i" v-for="(option, i) in newTestsItem.answerOptions">
+            <li :key="i" v-for="(answer, i) in newTestsItem.answers">
               <v-layout align-center>
                 <v-text-field
-                  v-model="option.answer"
+                  v-model="answer.answer"
                   class="text-add-test" solo label="Вариант ответа"></v-text-field>
                 <v-checkbox
-                  v-model="option.is_correct"
+                  v-model="answer.is_correct"
                   hide-details class="shrink mr-2 checkbox-add-test"></v-checkbox>
               </v-layout>
             </li>
           </ul>
         </div>
         <div class="add-test-coniner">
-          <v-btn @click.native="addQuestion" class="add-button" color="info">+</v-btn>
+          <v-btn @click.native="addTestData" class="add-button" color="info">+</v-btn>
           <v-btn @click.native="deleteQuestion" class="add-button" color="error">-</v-btn>
         </div>
       </b-col>
     </b-row>
+
+    <b-row v-if="selectedOfSubject" class="justify-content-md-center add-test">
+      <b-col col lg="4">
+        <div :key="i" v-for="(newTestsItem, i) in newTestData">
+          <v-text-field
+            v-model="newTestsItem.questionTitle" solo label="Название Вопроса"></v-text-field>
+          <ul class="options-of-tests">
+            <li :key="i" v-for="(answer, i) in newTestsItem.answers">
+              <v-layout align-center>
+                <v-text-field
+                  v-model="answer.answer"
+                  class="text-add-test" solo label="Вариант ответа"></v-text-field>
+                <v-checkbox
+                  v-model="answer.is_correct"
+                  hide-details class="shrink mr-2 checkbox-add-test"></v-checkbox>
+              </v-layout>
+            </li>
+          </ul>
+        </div>
+        <div class="add-test-coniner">
+          <v-btn @click.native="addTestData" class="add-button" color="info">+</v-btn>
+          <v-btn @click.native="deleteQuestion" class="add-button" color="error">-</v-btn>
+        </div>
+      </b-col>
+    </b-row>
+
   </b-container>
 </template>
 
 <script>
+import uuid from 'uuid/v4';
+import { mapState } from 'vuex';
+
 export default {
-  data: () => ({
-    selected: { item: '' },
-    items: [{ item: 'Математика' }, { item: 'История' }, { item: 'Физика' }],
-    nameOfSubject: '',
-    selectedOfSubject: false,
-    newTests: [{
-      id: 0,
-      question: '',
-      answerOptions: [
-        { answer: '', is_correct: false, quest_id: 0 },
-        { answer: '', is_correct: false, quest_id: 0 },
-        { answer: '', is_correct: false, quest_id: 0 },
-        { answer: '', is_correct: false, quest_id: 0 },
-      ],
-    }],
-  }),
+  data() {
+    return {
+      selected: false,
+      selectedOfSubject: false,
+      newTests: {
+        nameOfSubject: 'asd',
+        id: uuid(),
+        desc: `Тесты по предмету ${this.nameOfSubject}`, // 234
+      },
+      newTestData: [],
+    };
+  },
+
+  mounted() {
+    if (!this.testName.length > 0) {
+      return this.$store.dispatch('getName/getNameOfTest');
+    }
+    return null;
+  },
+
+  computed: {
+    ...mapState({
+      testName: state => state.getName.names,
+    }),
+  },
 
   methods: {
     onSelectOfSubject() {
       this.selectedOfSubject = true;
     },
-    addQuestion(questId) {
-      this.newTests.push({
-        question: '',
-        answerOptions: [
+    onSelected() {
+      this.selected = true;
+    },
+    deleteQuestion() {
+      this.newTestData.pop();
+    },
+    addTestData() {
+      const questId = uuid();
+
+      const newData = {
+        id: questId,
+        questionTitle: '',
+        test_id: this.newTests.id,
+        answers: [
           { answer: '', is_correct: false, quest_id: questId },
           { answer: '', is_correct: false, quest_id: questId },
           { answer: '', is_correct: false, quest_id: questId },
           { answer: '', is_correct: false, quest_id: questId },
         ],
-      });
-    },
-    deleteQuestion() {
-      this.newTests.pop();
+      };
+
+      this.newTestData.push(newData);
     },
   },
 };

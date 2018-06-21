@@ -16,8 +16,8 @@
                 <li v-if="authorizedUser">
                   <router-link class="menu__items" to="/test">Тест</router-link>
                 </li>
+                <li><router-link class="menu__items" to="/articles">Статьи</router-link></li>
                 <li><router-link class="menu__items" to="/contacts">Контакты</router-link></li>
-                <li><router-link class="menu__items" to="/about">О нас</router-link></li>
               </ul>
             </nav>
           </b-col>
@@ -57,9 +57,8 @@
                     color="primary"
                     v-else
                     flat>
-                      {{ authorizedUser.secondName }}
-                      {{ authorizedUser.displayName }}
-                      {{ authorizedUser.middleName }}
+                      {{ authorizedUser.secondName[0] + '.' }}
+                      {{ authorizedUser.displayName}}
                     </a>
                 </li>
                 <li>

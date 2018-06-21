@@ -1,9 +1,13 @@
 <template>
   <v-footer v-sticky="{ zIndex: 1, stickyTop: screenHeight, disabled: false }" height="50px" dark>
     &nbsp;
-    <div>Authors: Almambetov Jeenbek & Eduard Ilyaskin</div>
+    &nbsp;
+    <i class="material-icons">horizontal_split</i>
+    &nbsp;
+    &nbsp;
+    <div>Сайт компании "EE Project"</div>
     <v-spacer></v-spacer>
-    <div>&copy; Copyright  {{ new Date().getFullYear() }}</div>
+    <div> {{ new Date().getFullYear() }} &copy; Все права защищены.</div>
     &nbsp;
   </v-footer>
 </template>
@@ -24,6 +28,8 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+i
+  font-size: 34px
 .footer
   padding-right: 10px
 </style>

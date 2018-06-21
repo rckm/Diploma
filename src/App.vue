@@ -21,7 +21,7 @@ import firebase         from 'firebase'                                  ;
 import header           from './components/mainPage/mainHeader.vue'      ;
 import formRegistration from './components/mainPage/formRegistration.vue';
 import signIn           from './components/mainPage/formSignIn.vue'      ;
-import mainFooter           from './components/mainPage/mainFooter.vue'  ;
+import mainFooter       from './components/mainPage/mainFooter.vue'      ;
 
 const config = {
   apiKey           : 'AIzaSyDF6e6k4DN8ap4hVdmgc8jk1bW_gYtqqUU',

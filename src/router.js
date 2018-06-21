@@ -5,6 +5,8 @@ import homePage from './components/homePage.vue';
 import beginTest from './components/mainPage/beginTest.vue';
 import test from './components/mainPage/test.vue';
 import panel from './components/adminPage/panel.vue';
+import contacts from './components/mainPage/contacts.vue';
+import articles from './components/mainPage/articles.vue';
 
 Vue.use(Router);
 
@@ -25,6 +27,16 @@ export default new Router({
       path: '/test/beginTest/:id',
       name: 'beginTest',
       component: beginTest,
+    },
+    {
+      path: '/contacts',
+      name: 'contacts',
+      component: contacts,
+    },
+    {
+      path: '/articles',
+      name: 'articles',
+      component: articles,
     },
     {
       path: '/admin',
